@@ -347,9 +347,9 @@ class NKFido2Client:
         try:
             client_token = client_pin.get_pin_token(pin)
         except CtapError as e:
-            if str(CtapError.ERR.PIN_NOT_SET) in str(e):
+            if e.code == CtapError.ERR.PIN_NOT_SET:
                 local_critical("Please set a pin in order to manage credentials")
-            if str(CtapError.ERR.PIN_BLOCKED) in str(e):
+            if e.code == CtapError.ERR.PIN_BLOCKED:
                 local_critical(
                     "Pin authentication has been blocked, try reinserting the key, setting a pin or "
                     "reseting the device"
